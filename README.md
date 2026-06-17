@@ -7,12 +7,12 @@ _A small SAT solver._
 To start do 
 
 ```bash
-cmake -S . -B build
-cmake --build build 
-./build/sat that.cnf
+$ cmake -S . -B build
+$ cmake --build build 
+$ ./build/sat that.cnf
 ```
 
-This repo has `that.cnf` as an example, but the `sat` program takes a `DIMACS` CNF as the first argument.
+This repo has `that.cnf` as an example, but the `sat` program takes a `DIMACS` CNF [like this](https://jix.github.io/varisat/manual/0.2.0/formats/dimacs.html) as the first argument.
 
 
 ## Description
@@ -33,3 +33,26 @@ DPLL(formula F, assignment A):
 ```
 
 
+## Example problem 
+The file `that.cnf` contains a `DIMACS` spec for the pigeonhole problem [see here for an example](https://www.cs.ubc.ca/~hoos/SATLIB/Benchmarks/SAT/DIMACS/PHOLE/descr.html)
+
+
+```
+c pigeonhole: 2 pigeons, 1 hole — must be UNSAT
+p cnf 2 3
+1 0
+2 0
+-1 -2 0
+```
+
+After building the project run this with
+
+```bash
+$ ./build/sat that.cnf
+```
+
+and get 
+
+```bash
+s UNSATISFIABLE
+```
