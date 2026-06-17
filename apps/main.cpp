@@ -9,7 +9,7 @@
 // Parse DIMACS CNF from any input stream into the solver.
 // Format: 'c' comment lines, one 'p cnf <vars> <clauses>' header,
 // then clauses as space-separated literals terminated by 0.
-static bool parseDimacs(std::istream& in, Solver& s) {
+static bool parse_dimacs(std::istream& in, Solver& s) {
     std::string line;
     std::vector<int> clause;
     bool headerSeen = false;
@@ -22,8 +22,8 @@ static bool parseDimacs(std::istream& in, Solver& s) {
         if (first == 'c') continue;          // comment
         if (first == 'p') {                  // header: p cnf <n_vars> <nClauses>
             std::string fmt;
-            int nClauses;
-            ls >> fmt >> s.n_vars >> nClauses;
+            int n_clauses;
+            ls >> fmt >> s.n_vars >> n_clauses;
             if (fmt != "cnf") {
                 std::cerr << "error: expected 'cnf', got '" << fmt << "'\n";
                 return false;
@@ -58,7 +58,7 @@ static bool parseDimacs(std::istream& in, Solver& s) {
 
 int main(int argc, char** argv) {
     Solver s;
-    s.clauses.clear();
+    s.init();
 
     bool ok;
     if (argc > 1) {                          // read from file
@@ -67,9 +67,9 @@ int main(int argc, char** argv) {
             std::cerr << "error: cannot open '" << argv[1] << "'\n";
             return 2;
         }
-        ok = parseDimacs(file, s);
+        ok = parse_dimacs(file, s);
     } else {                                 // read from stdin
-        ok = parseDimacs(std::cin, s);
+        ok = parse_dimacs(std::cin, s);
     }
     if (!ok) return 2;
 

@@ -2,6 +2,11 @@
 #include "solver.hpp"
 
 
+void Solver::init(void) {
+	this->clauses.clear();
+}
+
+
 Val Solver::lit_value(int lit) const {
 	Val v = this->value[abs(lit)];
 	if( v == Val::UNDEF ) 
@@ -19,6 +24,7 @@ void Solver::assign(int lit) {
 
 bool Solver::propagate(void) {
 	bool changed = true;
+
 	while( changed ) {
 		changed = false;
 		for( auto& c: this->clauses) {

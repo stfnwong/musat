@@ -19,6 +19,7 @@ struct Solver {
 	std::vector<int> trail_lim;             // trail indices where each decision level began
 
 	public:
+		void init(void);
 		Val lit_value(int lit) const;
 		void assign(int lit);
 
